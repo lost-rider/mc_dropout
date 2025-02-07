@@ -1,0 +1,1 @@
+Split 0: Best tau: 0.1, Best dropout: 0.005, LL: -7.149111630971201

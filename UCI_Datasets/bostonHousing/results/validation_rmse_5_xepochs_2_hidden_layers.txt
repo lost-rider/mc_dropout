@@ -1,0 +1,14 @@
+Dropout_Rate: 0.005 Tau: 0.1 :: 2.947759437355925
+Dropout_Rate: 0.005 Tau: 0.15 :: 3.324237666966086
+Dropout_Rate: 0.005 Tau: 0.2 :: 3.447159646417871
+Dropout_Rate: 0.01 Tau: 0.1 :: 3.3463609471489533
+Dropout_Rate: 0.01 Tau: 0.15 :: 3.1987988413774966
+Dropout_Rate: 0.01 Tau: 0.2 :: 3.1678158672302126
+Dropout_Rate: 0.05 Tau: 0.1 :: 3.5610563410485208
+Dropout_Rate: 0.05 Tau: 0.15 :: 3.4681037827767285
+Dropout_Rate: 0.05 Tau: 0.2 :: 3.4705282727815434
+Dropout_Rate: 0.1 Tau: 0.1 :: 3.9303879838345797
+Dropout_Rate: 0.1 Tau: 0.15 :: 3.8642592551476347
+Dropout_Rate: 0.1 Tau: 0.2 :: 3.952768580902417
+Dropout_Rate: 0.005 Tau: 0.1 :: 3.900192479577969
+Dropout_Rate: 0.005 Tau: 0.15 :: 4.04126444771661
