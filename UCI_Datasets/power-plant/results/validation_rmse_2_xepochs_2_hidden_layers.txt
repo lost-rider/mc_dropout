@@ -1,0 +1,6 @@
+Dropout_Rate: 0.05 Tau: 0.05 :: 4.657100118147777
+Dropout_Rate: 0.05 Tau: 0.1 :: 4.802034784785485
+Dropout_Rate: 0.05 Tau: 0.15 :: 5.271317249975626
+Dropout_Rate: 0.1 Tau: 0.05 :: 7.95710539852345
+Dropout_Rate: 0.1 Tau: 0.1 :: 5.513122329670465
+Dropout_Rate: 0.1 Tau: 0.15 :: 5.267675354940583
