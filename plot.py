@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import re
 
 # Read the file
-filepath= r"C:\Users\amish\Documents\open\DropoutUncertaintyExps\UCI_Datasets\bostonHousing\results\validation_MC_rmse_5_xepochs_2_hidden_layers.txt"
+filepath= r"C:\Users\amish\Documents\open\DropoutUncertaintyExps\UCI_Datasets\bostonHousing\results\validation_ll_5_xepochs_2_hidden_layers.txt"
 with open( filepath, "r") as file:
     lines = file.readlines()
 

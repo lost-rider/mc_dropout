@@ -136,4 +136,4 @@ class net:
         test_ll = np.mean(ll)
 
         # We are done!
-        return rmse_standard_pred, rmse, test_ll
+        return rmse_standard_pred, rmse, test_ll, MC_pred

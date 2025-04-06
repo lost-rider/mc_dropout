@@ -5,6 +5,11 @@ import argparse
 import sys
 import os
 from net import net
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+# Train a standard Linear Regression model
+
 
 # python -u "c:\Users\amish\Documents\open\DropoutUncertaintyExps\experiment.py" --dir bostonHousing
 parser = argparse.ArgumentParser()
@@ -112,9 +117,8 @@ for split in range(n_splits):
     print(f'Number of validation examples: {X_validation.shape[0]}')
     print(f'Number of test examples: {X_test.shape[0]}')
 
-    dropout_rates = np.loadtxt(data_files["dropout_rates"]).tolist()
-    tau_values = np.loadtxt(data_files["tau_values"]).tolist()
-
+    dropout_rates = [0.05]
+    tau_values = [0.1]
     best_network = None
     best_ll = -float('inf')
     best_tau, best_dropout = 0, 0
@@ -126,7 +130,7 @@ for split in range(n_splits):
                               normalize=True, n_epochs=int(n_epochs * epochs_multiplier),
                               tau=tau, dropout=dropout_rate)
 
-            error, MC_error, ll = network.predict(X_validation, y_validation)
+            error, MC_error, ll, y_pred_bnn = network.predict(X_validation, y_validation)
             if ll > best_ll:
                 best_ll = ll
                 best_network = network
@@ -148,7 +152,55 @@ for split in range(n_splits):
                            normalize=True, n_epochs=int(n_epochs * epochs_multiplier),
                            tau=best_tau, dropout=best_dropout)
 
-    error, MC_error, ll = best_network.predict(X_test, y_test)
+    error, MC_error, ll,y_pred_bnn = best_network.predict(X_test, y_test)
+
+    # Compute R^2 score as an accuracy measure
+    # y_pred, y_var = best_network.predict_mean_var(X_test)
+    # y_std = np.sqrt(y_var)  # Convert variance to standard deviation
+
+    # mse = np.mean((y_test - y_pred) ** 2)
+    # variance = np.var(y_test)
+    # r2_score = 1 - (mse / variance)
+
+    # # Compute confidence interval using tau
+    # sigma = 1 / np.sqrt(best_tau)
+    # within_95_confidence = np.mean(np.abs(y_test - y_pred) <= 2 * sigma) * 100  # Percentage of points within 95% CI
+
+    # # Log the accuracy measures
+    # with open(result_files["test_log"], "a") as myfile:
+    #     myfile.write(f'R^2 Score: {r2_score}\n')
+    #     myfile.write(f'95% Confidence Interval Accuracy: {within_95_confidence}%\n')
+
+    # print(f'R^2 Score: {r2_score}')
+    # print(f'95% Confidence Interval Accuracy: {within_95_confidence}%')
+
+    linear_reg = LinearRegression()
+    linear_reg.fit(X_train, y_train)
+
+    # Make predictions
+    y_pred_linear = linear_reg.predict(X_test)
+
+    # Compute R^2 score for Linear Regression
+    r2_score_linear = r2_score(y_test, y_pred_linear)
+
+    # Compute R^2 score for your Bayesian Neural Network
+    rmse_standard, rmse_mc, test_ll, y_pred_bnn = best_network.predict(X_test, y_test)
+
+# Compute R^2 score for Bayesian Neural Network
+    r2_score_bnn = r2_score(y_test, y_pred_bnn)
+
+
+    # Log and print comparison results
+    with open(result_files["test_log"], "a") as myfile:
+        myfile.write(f'Linear Regression R^2 Score: {r2_score_linear}\n')
+        myfile.write(f'Bayesian NN R^2 Score: {r2_score_bnn}\n')
+        myfile.write(f'Difference: {r2_score_bnn - r2_score_linear}\n')
+
+    print(f'Linear Regression R^2 Score: {r2_score_linear}')
+    print(f'Bayesian NN R^2 Score: {r2_score_bnn}')
+    print(f'Difference: {r2_score_bnn - r2_score_linear}')
+
+
 
     with open(result_files["test_rmse"], "a") as myfile:
         myfile.write(f'{error}\n')
